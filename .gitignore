@@ -1,0 +1,4 @@
+.env
+yandex_private.pem
+input/*
+output/*
