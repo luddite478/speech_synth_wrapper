@@ -2,3 +2,5 @@
 yandex_private.pem
 input/*
 output/*
+__pycache__
+raw/*
