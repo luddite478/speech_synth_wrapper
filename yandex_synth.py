@@ -44,15 +44,29 @@ def create_jwt():
 	
 	return encoded_token
 
+def convert_text_to_SSML(text):
+    text = '<speak> ' + text + ' </speak>'
 
-def request_synth_data(folder_id, iam_token, text, synth_args):
+    # for i, ch in enumerate(text):
+    #     # if ch == ',':
+    #     #     text = text[:i+1] + ' <break strength="weak"> '   + text[i+1:]
+    #     if ch == ':' or ch == ';' or ch == '-' or ch == '—':
+    #         text = text[:i+1] + ' <break strength="medium"> ' + text[i+1:]
+    #     elif ch == '.' or ch == '?' or ch == '!':
+    #         text = text[:i+1] + ' <break strength="strong"> ' + text[i+1:]
+
+    return text
+    
+
+def request_synth_data(folder_id, iam_token, ssml_text, synth_args):
+
     url = 'https://tts.api.cloud.yandex.net/speech/v1/tts:synthesize'
     headers = {
         'Authorization': 'Bearer ' + iam_token,
     }
-
+    print(synth_args['speed'])
     data = {
-        'text': text,
+        'ssml': ssml_text,
         'voice': synth_args['voice'],
         'speed': synth_args['speed'],
         'emotion': synth_args['emotion'],
@@ -104,13 +118,17 @@ def synthesize(iam_token, yandex_folder_id, text_file_path, synth_args, output_f
 
     # create folder for output audio
     final_output_path = os.path.join(output_folder_path,'[{}_{}_{}]'.format(voice,emotion,speed))
-    os.mkdir(final_output_path)
-
+    if not os.path.exists(final_output_path):
+        os.mkdir(final_output_path)
+    
     for i, line in enumerate(lines):
 
-        text = line.strip()
+        ssml_text = convert_text_to_SSML(line)
+        print(ssml_text)
+
         line_number = str(i)
         file_name_text = re.sub(r'[^\w]', ' ', line).replace(' ', '_')
+        file_name_text = file_name_text[:150] if len(file_name_text) > 150 else file_name_text
         # <text>_[<line_num>_<voice>_<emotion>_<speed>]
         file_name = file_name_text + "_" + "[{}_{}_{}_{}]".format(line_number,voice,emotion,speed) + '.raw'
         raw_file_output_path = os.path.join('raw', file_name)
@@ -118,7 +136,7 @@ def synthesize(iam_token, yandex_folder_id, text_file_path, synth_args, output_f
         # create folder for output audio
         with open(raw_file_output_path, "wb") as f:
             # request audio files
-            for audio_content in request_synth_data(yandex_folder_id, iam_token, text, synth_args):
+            for audio_content in request_synth_data(yandex_folder_id, iam_token, ssml_text, synth_args):
                 f.write(audio_content)
             f.close()
            
