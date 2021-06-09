@@ -2,8 +2,8 @@
 
 ## To synth voice:
 1. Run main.py
-2. Set input file in touchdesinger voicesynth.toe 
-3. Set output folder (playlist folder)
+2. Set input text file path in the input_text_file DAT of voicesynth.toe 
+3. Set output folder in text_to_speech/meta DAT (playlist folder) of voicesynth.toe
 4. Save text file
 
 ## Available line options: ["v"="","e"="","s"="","l"="",p=""]
