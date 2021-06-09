@@ -4,8 +4,7 @@
 1. Run main.py
 2. Set input file in touchdesinger voicesynth.toe 
 3. Set output folder (playlist folder)
-4. Save file
-5. Save text file
+4. Save text file
 
 ## Available line options: ["v"="","e"="","s"="","l"="",p=""]
 # v - voice 
