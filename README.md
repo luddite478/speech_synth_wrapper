@@ -1,3 +1,5 @@
+![alt text](architecture.png?raw=true)
+
 ## To synth voice:
 1. Run main.py
 2. Set input file in touchdesinger voicesynth.toe 
@@ -37,5 +39,3 @@ Only for (ru-RU) и voices jane or omazh.
 
 ## TODO:
 And other voice synths (works only with yandex at the moment)
-
-![alt text](architecture.png?raw=true)
