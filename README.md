@@ -8,7 +8,6 @@
 5. Save text file
 
 ## Available line options: ["v"="","e"="","s"="","l"="",p=""]
-
 # v - voice 
 * oksana	ru-RU	Ж
 * jane	ru-RU	Ж
@@ -38,4 +37,4 @@ Only for (ru-RU) и voices jane or omazh.
 * 0 - N
 
 ## TODO:
-And other voice synths (works only with yandex at the moment)
+Add other voice synths (works only with yandex at the moment)
