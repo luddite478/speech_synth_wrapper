@@ -175,10 +175,11 @@ def synthesize(iam_token, yandex_folder_id, text, synth_args, output_path):
     with open(raw_file_output_path, "wb") as f:
 
         # request audio files   
+        
         for audio_content in request_synth_data(yandex_folder_id, iam_token, ssml_text, synth_args):
             f.write(audio_content)
         f.close()
-        
+        print(text)
         audio_options = {
             'pitch': pitch
         }

@@ -21,6 +21,7 @@ while(True):
     address = bytesAddressPair[1]
 
     request = json.loads(message.decode('utf-8'))
+    print(request)
     t = threading.Thread(target=synthesize, args=(request,))
     t.start()
 

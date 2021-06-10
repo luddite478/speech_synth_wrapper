@@ -2,6 +2,7 @@ import subprocess as sp
 
 def process_audio(input_file_path, audio_options, output_path):
 	pitch_multiplier = audio_options['pitch']
+	#volume_multiplier = audio_options['volume']
 
 	pitch_cmd = [
 		'ffmpeg', '-hide_banner',
@@ -19,6 +20,7 @@ def process_audio(input_file_path, audio_options, output_path):
 		'-ac', '1', 
 		'-i', input_file_path, 
 		'-sample_rate', '44100',
+		'-filter:a', 'loudnorm',
 		'-y'
 	] 
 
@@ -35,6 +37,7 @@ def process_audio(input_file_path, audio_options, output_path):
 	if pitch_multiplier != '1':
 		resample_output = ['-f', 's16le', '-', '|']
 		cmd = resample_cmd + resample_output + pitch_cmd + del_tmp_file_cmd
+		cmd = resample_cmd + resample_output + pitch_cmd
 
 	print(cmd)
 	sp.Popen(cmd, stderr=sp.PIPE, shell=True)
