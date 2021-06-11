@@ -40,7 +40,7 @@ def create_jwt():
         private_key,
         algorithm='PS256',
         headers={'kid': key_id})
-
+    
     dotenv.set_key("./.env", "jwt", encoded_token)
 
     return encoded_token
@@ -153,11 +153,12 @@ def synthesize(iam_token, yandex_folder_id, text, synth_args, output_path):
     line_args = parse_line_specific_args(text)
     
     # Parse line args in square brackets ["v"="","e"="","s"="","l"="",p=""]
-    voice     =  line_args["v"]  if  "v"  in  line_args else voice
-    emotion   =  line_args["e"]  if  "e"  in  line_args else emotion
-    speed     =  line_args["s"]  if  "s"  in  line_args else speed
-    language  =  line_args["l"]  if  "l"  in  line_args else language
-    pitch     =  line_args["p"]  if  "p"  in  line_args else '1'
+    voice     =  line_args["v"]    if  "v"    in  line_args else voice
+    emotion   =  line_args["e"]    if  "e"    in  line_args else emotion
+    speed     =  line_args["s"]    if  "s"    in  line_args else speed
+    language  =  line_args["l"]    if  "l"    in  line_args else language
+    pitch     =  line_args["p"]    if  "p"    in  line_args else '1'
+    volume    =  line_args["vol"]  if  "vol"  in  line_args else '1'
 
     synth_args['voice']    = voice
     synth_args['emotion']  = emotion
@@ -180,8 +181,10 @@ def synthesize(iam_token, yandex_folder_id, text, synth_args, output_path):
             f.write(audio_content)
         f.close()
         print(text)
+        
         audio_options = {
-            'pitch': pitch
+            'pitch': pitch,
+            'volume': volume
         }
 
         process_audio(raw_file_output_path, audio_options, output_path)
